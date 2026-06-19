@@ -273,13 +273,19 @@ section{position:relative}
       </div>
       <div class="chips" id="chips">
         <button class="chip" data-model="claude">Structure a client deck</button>
+        <button class="chip" data-model="codex">Refactor a tangled function</button>
         <button class="chip" data-model="gpt">Quick dinner recipe</button>
+        <button class="chip" data-model="perplexity">Research an unfamiliar market</button>
         <button class="chip" data-model="gemini">Latest on a competitor</button>
         <button class="chip" data-model="grok">Hear all sides of a debate</button>
+        <button class="chip" data-model="codex">Fix a failing test</button>
         <button class="chip" data-model="claude">Synthesise interview notes</button>
+        <button class="chip" data-model="perplexity">Get an answer with sources</button>
         <button class="chip" data-model="gpt">Plan a weekend city break</button>
         <button class="chip" data-model="gemini">Check a market figure</button>
+        <button class="chip" data-model="codex">Ship a small feature</button>
         <button class="chip" data-model="claude">Pressure-test a hypothesis</button>
+        <button class="chip" data-model="perplexity">Compare two vendors</button>
         <button class="chip" data-model="grok">Pressure-test a strong opinion</button>
         <button class="chip" data-model="gpt">Reword a tricky email</button>
         <button class="chip" data-model="gemini">Find a client-dinner spot</button>
@@ -298,7 +304,7 @@ section{position:relative}
       <div class="section-hairline reveal"></div>
       <div class="sec-head reveal">
         <p class="section-label"><span class="num">01</span> <span class="ember">\</span> The line-up</p>
-        <h2>Four minds, each with a job it does best</h2>
+        <h2>Six minds, each with a job it does best</h2>
       </div>
       <div class="grid">
 
@@ -358,6 +364,34 @@ section{position:relative}
           <div class="tip"><p class="label">Tip</p><span>Treat it as one voice, not the verdict. No model is truly neutral, so triangulate before you trust.</span></div>
         </article>
 
+        <article class="card reveal" data-card="codex">
+          <span class="card-idx"><span class="num">05</span> <span class="ember">\</span></span>
+          <h3>Codex</h3>
+          <p class="caption">The engineering agent</p>
+          <p class="why">OpenAI's coding agent. It lives in your codebase and terminal rather than a chat box, writing, running, and debugging real software end to end.</p>
+          <ul class="best">
+            <li><span class="ember">\</span> Writing and refactoring code</li>
+            <li><span class="ember">\</span> Debugging and fixing failing tests</li>
+            <li><span class="ember">\</span> Building features across a repo</li>
+            <li><span class="ember">\</span> Automating dev and shell workflows</li>
+          </ul>
+          <div class="tip"><p class="label">Tip</p><span>Describe the outcome, not every step. Let it run, then read the diff and review before you merge.</span></div>
+        </article>
+
+        <article class="card reveal" data-card="perplexity">
+          <span class="card-idx"><span class="num">06</span> <span class="ember">\</span></span>
+          <h3>Perplexity</h3>
+          <p class="caption">The answer engine</p>
+          <p class="why">Built for research, not chat. It searches the live web and hands back a direct answer with every source cited, so you can follow the trail and check the claim.</p>
+          <ul class="best">
+            <li><span class="ember">\</span> Researching an unfamiliar topic</li>
+            <li><span class="ember">\</span> Answers with citations you can verify</li>
+            <li><span class="ember">\</span> Comparing options or vendors</li>
+            <li><span class="ember">\</span> Deep-dive reports with references</li>
+          </ul>
+          <div class="tip"><p class="label">Tip</p><span>Follow the citations, not just the summary. Its real strength is showing you where each claim came from.</span></div>
+        </article>
+
       </div>
     </div>
   </section>
@@ -386,6 +420,8 @@ section{position:relative}
         <div class="cheat-row"><span class="tag">Claude <span class="ember">\</span></span><p><strong>Writing, research, real thinking.</strong> The thought partner.</p></div>
         <div class="cheat-row"><span class="tag">Gemini <span class="ember">\</span></span><p><strong>Latest, live, Google-connected.</strong> The fact-checker.</p></div>
         <div class="cheat-row"><span class="tag">Grok <span class="ember">\</span></span><p><strong>Controversial, all sides, unfiltered.</strong> One voice among several.</p></div>
+        <div class="cheat-row"><span class="tag">Codex <span class="ember">\</span></span><p><strong>Code, debug, build software.</strong> The engineering agent.</p></div>
+        <div class="cheat-row"><span class="tag">Perplexity <span class="ember">\</span></span><p><strong>Research with cited sources.</strong> The answer engine.</p></div>
       </div>
       <p class="section-note reveal">These are tendencies, not laws. The models leapfrog each other constantly, so re-check your defaults every few months and let the task, not habit, decide.</p>
     </div>
@@ -398,7 +434,9 @@ section{position:relative}
     gpt:'Open <strong>ChatGPT</strong>. Broad, fast, and forgiving, it is the everyday default for quick, low-stakes asks.',
     claude:'Open <strong>Claude</strong>. Best when the quality of the thinking matters: writing, research, and working a problem properly.',
     gemini:'Open <strong>Gemini</strong>. Wired into Google and the live web, it is your move for anything recent or fact-bound.',
-    grok:'Open <strong>Grok</strong>. Looser on edgy topics and plugged into social, it surfaces the takes others trim. Treat it as one voice.'
+    grok:'Open <strong>Grok</strong>. Looser on edgy topics and plugged into social, it surfaces the takes others trim. Treat it as one voice.',
+    codex:'Open <strong>Codex</strong>. OpenAI\'s coding agent works inside your codebase and terminal: writing, running, and debugging real software end to end.',
+    perplexity:'Open <strong>Perplexity</strong>. An answer engine built for research: it searches the live web and gives you a direct answer with the sources cited.'
   };
   const chips=[...document.querySelectorAll('.chip')];
   const cards=[...document.querySelectorAll('.card')];
