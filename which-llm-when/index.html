@@ -153,6 +153,8 @@ section{position:relative}
 .verdict strong{color:var(--fg-1);font-weight:500}
 @keyframes vflash{0%{box-shadow:0 0 0 0 rgba(216,102,46,.45)}100%{box-shadow:0 0 0 7px rgba(216,102,46,0)}}
 .verdict.flash{animation:vflash .6s var(--ease-out)}
+/* mobile-only floating results bar (desktop: hidden) */
+.mobile-verdict{display:none}
 
 .sec{padding:104px 0 0}
 .sec-head{margin-bottom:42px}
@@ -235,12 +237,22 @@ section{position:relative}
   .bone{padding:36px 26px}
   .close{padding-top:110px}.close-grid{grid-template-columns:1fr;gap:36px}
   .close-foot{margin-top:80px}
-  /* answer becomes a sticky results bar so it stays visible while scrolling chips */
-  .verdict{position:sticky;bottom:12px;z-index:5;margin-top:22px;border-top:0;padding:15px 16px;
-    background:var(--petrol-mid);border:.5px solid var(--slate-light);border-radius:var(--radius);
-    box-shadow:0 16px 36px -18px rgba(0,0,0,.85)}
-  .verdict.on{border-color:var(--ember)}
-  .verdict p{font-size:15px}
+  /* inline verdict hidden on mobile; replaced by the floating bar below */
+  .verdict{display:none}
+  .mobile-verdict{display:flex;gap:14px;align-items:flex-start;
+    position:fixed;left:12px;right:12px;bottom:12px;z-index:50;
+    padding:14px 16px;background:var(--petrol-mid);
+    border:.5px solid var(--slate-light);border-radius:var(--radius);
+    box-shadow:0 16px 38px -14px rgba(0,0,0,.9);
+    opacity:0;transform:translateY(14px);pointer-events:none;
+    transition:opacity .26s var(--ease-out),transform .26s var(--ease-out)}
+  .mobile-verdict.visible{opacity:1;transform:none;pointer-events:auto}
+  .mobile-verdict.on{border-color:var(--ember)}
+  .mobile-verdict.flash{animation:vflash .6s var(--ease-out)}
+  .mobile-verdict .mk{flex:0 0 auto;font-family:var(--font-display);color:var(--mist-dim);font-size:20px;transition:color var(--dur) var(--ease-out)}
+  .mobile-verdict.on .mk{color:var(--ember)}
+  .mobile-verdict p{font-size:15px;line-height:1.6;color:var(--mist);margin:0}
+  .mobile-verdict strong{color:var(--fg-1);font-weight:500}
 }
 @media (prefers-reduced-motion:reduce){
   *{transition:none!important;scroll-behavior:auto}.card.is-rec{transform:none}.reveal{opacity:1;transform:none}.verdict.flash{animation:none}
@@ -250,6 +262,10 @@ section{position:relative}
 <body>
 
 <button type="button" class="nav-backdrop" id="navBackdrop" aria-hidden="true" tabindex="-1"></button>
+<div class="mobile-verdict" id="mobileVerdict" aria-live="polite">
+  <span class="mk">\</span>
+  <p id="mvtext">Tap a task and the right model lights up here.</p>
+</div>
 <nav class="nav" id="nav">
   <div class="nav-inner">
     <a class="brand mark mark-xs" href="https://mayadvisory.nl" aria-label="may advisory - go to mayadvisory.nl">
@@ -450,11 +466,22 @@ section{position:relative}
   const cards=[...document.querySelectorAll('.card')];
   const vtext=document.getElementById('vtext');
   const verdict=document.getElementById('verdict');
+  const mverdict=document.getElementById('mobileVerdict');
+  const mvtext=document.getElementById('mvtext');
+  function flash(el){el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash');}
   function select(model,chip){
     chips.forEach(c=>c.setAttribute('aria-pressed',c===chip?'true':'false'));
     cards.forEach(c=>c.classList.toggle('is-rec',c.dataset.card===model));
-    vtext.innerHTML=V[model];verdict.classList.add('on');
-    verdict.classList.remove('flash');void verdict.offsetWidth;verdict.classList.add('flash');
+    vtext.innerHTML=V[model];verdict.classList.add('on');flash(verdict);
+    mvtext.innerHTML=V[model];mverdict.classList.add('on');flash(mverdict);
+  }
+  // show the floating results bar (mobile) while the router is on screen
+  const routerEl=document.getElementById('router');
+  if(routerEl){
+    const barObserver=new IntersectionObserver(([e])=>{
+      mverdict.classList.toggle('visible',e.isIntersecting);
+    },{rootMargin:'0px 0px -40px 0px'});
+    barObserver.observe(routerEl);
   }
   chips.forEach(c=>c.addEventListener('click',()=>select(c.dataset.model,c)));
   const nav=document.getElementById('nav');
